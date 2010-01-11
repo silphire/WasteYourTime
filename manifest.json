@@ -4,5 +4,10 @@
 	"version": "0.1", 
 	"permissions": [ "tabs" ], 
 	"background_page": "background.html", 
-	"options_page": "option.html"
+	//"options_page": "option.html"
+	"browser_action": {
+		"default_icon": "popup_icon.png", 
+		"default_title": "Longest Opened Page History", 
+		"popup": "option.html"
+	}
 }
