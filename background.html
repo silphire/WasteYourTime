@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<script type="application/javascript">
+function loph() {
+	var counter = new Array();		// id -> beginTime
+	var displayingURL = new Array();	// id -> url
+	var displayingTitle = new Array();	// id -> title
+	
+	// TODO: 拡張が有効になった時点でのタブの情報を入れる必要がある。
+	
+	function addVisitedTime(tabId) {
+		var visitedDB;
+		var diff;
+		var obj;
+		
+		if(!(tabId in counter))
+			return;
+		
+		if('visitedDB' in localStorage)
+			visitedDB = JSON.parse(localStorage['visitedDB']);
+		else
+			visitedDB = {};
+		
+		diff = (new Date()).getTime() - counter[tabId];
+		diff = Math.round(diff / 1000);
+		
+		if(displayingURL[tabId] in visitedDB) {
+			obj = visitedDB[displayingURL[tabId]];
+		} else {
+			obj = { count: 0 };
+		}
+		
+		obj.count += diff;
+		obj.url = displayingURL[tabId];
+		obj.title = displayingTitle[tabId];
+		obj.lastVisited = (new Date()).getTime();
+		
+		visitedDB[displayingURL[tabId]] = obj;
+		localStorage['visitedDB'] = JSON.stringify(visitedDB);
+	}
+	
+	function startCounter(tabId, url) {
+		if(url.search(/http/) != 0)
+			return;
+		counter[tabId] = (new Date()).getTime();
+		displayingURL[tabId] = url;
+	}
+	
+	chrome.tabs.onCreated.addListener(function(tab) {
+		if("url" in tab) 
+			startCounter(tab.id, tab.url);
+	});
+
+	chrome.tabs.onRemoved.addListener(function(tabId) {
+		addVisitedTime(tabId);
+	});
+
+	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+		if("title" in tab) {
+			displayingTitle[tabId] = tab.title;
+		}
+		
+		if(typeof(changeInfo.url) == "undefined")
+			return;
+		
+		if(tabId in counter) {
+			addVisitedTime(tabId);
+		}
+		
+		if(!(tabId in counter) || displayingURL[tabId] != changeInfo.url) 
+			startCounter(tabId, changeInfo.url);
+	});
+}
+loph();
+</script>
+</head>
+
+<body>
+</body>
+</html>

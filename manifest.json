@@ -1,0 +1,8 @@
+{
+	"name": "Longest Opened Page History", 
+	"description": "", 
+	"version": "0.1", 
+	"permissions": [ "tabs" ], 
+	"background_page": "background.html", 
+	"options_page": "option.html"
+}

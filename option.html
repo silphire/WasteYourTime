@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<script type="application/javascript">
+
+// constants
+var maxGraphWidth = 320;
+var maxGraphHeight = 20;
+var fontSize = 12;
+
+function timeElement(n, unit) {
+	if(n == 0)
+		return "";
+	else
+		return "" + n + " " + unit + (n < 2 ? "" : "s");
+}
+
+function sec2date(sec) {
+	var datestr = "";
+	
+	datestr += timeElement(sec % 60, "second") + " ";
+	sec = Math.floor(sec / 60);
+	datestr = timeElement(sec % 60, "minute") + " " + datestr;
+	sec = Math.floor(sec / 60);
+	datestr = timeElement(sec % 24, "hour") + " " + datestr;
+	sec = Math.floor(sec / 24);
+	datestr = timeElement(sec, "day") + " " + datestr;
+	return datestr;
+}
+
+function createVisitedPageList() {
+	if(!('visitedDB' in localStorage))
+		return;
+	
+	var i;
+	var sorted = new Array();
+	var json = localStorage['visitedDB'];
+	var visitedDB = JSON.parse(json);
+	
+	for(var obj in visitedDB) {
+		sorted.push(visitedDB[obj]);
+	}
+	sorted.sort(function(a, b) { 
+		var cmp = b.count - a.count;
+		return cmp == 0 ? (a.url < b.url) : cmp;
+	});
+	
+	rankTable = document.getElementById("rankTable");
+	for(i = 0; i < Math.min(20, sorted.length); ++i) {
+		var item = '<tr id="rank_' + i + '">';
+		item += '<td>' + (i + 1) + '</td>';
+		
+		item += '<td>';
+		item += '<div><a href="' + sorted[i].url + '">' + sorted[i].title + '</a></div>';
+		item += '<div><canvas id="canvas_' + i + '" width="320" height="40"></canvas></div>';
+		item += '</td>';
+		
+		item += '</tr>';
+		rankTable.innerHTML += item;
+	}
+	
+	for(i = 0; i < Math.min(20, sorted.length); ++i) {
+		var ctx = document.getElementById('canvas_' + i).getContext('2d');
+		ctx.fillStyle = 'rgba(127, 127, 255, 50)';
+		ctx.textBaseline = "top";
+		var w =  Math.ceil(maxGraphWidth * sorted[i].count / sorted[0].count);
+		ctx.fillRect(0, 0, w, maxGraphHeight);
+		
+		ctx.font = "" + fontSize + "px Arial";
+		ctx.setBaseline = "top";
+		ctx.fillStyle = 'rgb(0, 0, 0)';
+		var metrics = ctx.measureText(sec2date(sorted[i].count));
+		ctx.fillText(sec2date(sorted[i].count), 20, (maxGraphHeight - fontSize) / 2);
+	}
+}
+
+function resetHistory() {
+	if(confirm('Are you sure to reset history?')) {
+		localStorage['visitedDB'] = "{}";
+		location.reload();
+	}
+}
+</script>
+</head>
+<body onload="javascript:createVisitedPageList()">
+<h1>visited list</h1>
+
+<table>
+  <tbody id="rankTable">
+  </tbody>
+  <thead>
+    <tr>
+      <th>rank</th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>rank</th>
+      <th>title</th>
+    </tr>
+  </tfoot>
+</table>
+
+<h1>reset visited history</h1>
+<button onclick="resetHistory()">reset</button>
+</body>
+</html>
