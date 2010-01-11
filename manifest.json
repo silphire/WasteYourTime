@@ -2,12 +2,17 @@
 	"name": "Waste Your Time", 
 	"description": "investigate which website wastes your expensive time", 
 	"version": "0.1", 
+	"icons": {
+		"16": "icon.png", 
+		"32": "icon.png", 
+		"64": "icon.png", 
+		"128": "icon.png"
+	}, 
 	"permissions": [ "tabs" ], 
 	"background_page": "background.html", 
-	//"options_page": "option.html"
 	"browser_action": {
-		"default_icon": "popup_icon.png", 
+		"default_icon": "icon.png", 
 		"default_title": "Waste Your Time", 
-		"popup": "option.html"
+		"popup": "popup.html"
 	}
 }
