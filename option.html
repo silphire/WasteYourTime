@@ -81,10 +81,28 @@ function resetHistory() {
 	}
 }
 </script>
+<style type="text/css">
+body {
+	background-color: #eeeeff;
+}
+
+#rank_0 {
+	font-size: 200%;
+	color: #ff0000;
+}
+
+#rank_1 {
+	font-size: 150%;
+	color: #00ff00;
+}
+
+#rank_2 {
+	font-size: 130%;
+	color: #0000ff;
+}
+</style>
 </head>
 <body onload="javascript:createVisitedPageList()">
-<h1>visited list</h1>
-
 <table>
   <tbody id="rankTable">
   </tbody>
@@ -102,7 +120,6 @@ function resetHistory() {
   </tfoot>
 </table>
 
-<h1>reset visited history</h1>
 <button onclick="resetHistory()">reset</button>
 </body>
 </html>
