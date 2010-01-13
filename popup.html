@@ -5,7 +5,7 @@
 
 // constants
 var maxGraphWidth = 320;
-var maxGraphHeight = 20;
+var maxGraphHeight = 15;
 var fontSize = 12;
 
 function timeElement(n, unit) {
@@ -52,7 +52,7 @@ function createVisitedPageList() {
 		
 		item += '<td>';
 		item += '<div><a href="' + sorted[i].url + '">' + sorted[i].title + '</a></div>';
-		item += '<div><canvas id="canvas_' + i + '" width="320" height="40"></canvas></div>';
+		item += '<div><canvas id="canvas_' + i + '" width="320" height="15"></canvas></div>';
 		item += '</td>';
 		
 		item += '</tr>';
@@ -75,30 +75,14 @@ function createVisitedPageList() {
 }
 
 function resetHistory() {
-	if(confirm('Are you sure to reset history?')) {
-		localStorage['visitedDB'] = "{}";
-		location.reload();
-	}
+	localStorage['visitedDB'] = "{}";
+	document.getElementById("rankTable").innerHTML = "";
 }
 </script>
 <style type="text/css">
 body {
+	font-size: 12px;
 	background-color: #eeeeff;
-}
-
-#rank_0 {
-	font-size: 200%;
-	color: #ff0000;
-}
-
-#rank_1 {
-	font-size: 150%;
-	color: #00ff00;
-}
-
-#rank_2 {
-	font-size: 130%;
-	color: #0000ff;
 }
 </style>
 </head>
