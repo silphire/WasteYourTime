@@ -1,0 +1,13 @@
+{
+	"wyt": {
+		"message": "Waste Your Time", 
+		"description": "貴重な時間を浪費しているWebサイトがどれかを調べます", 
+		"author": "三井雄貴 <silphire@gmail.com>"
+	},
+	"rank": {
+		"message": "順位"
+	}, 
+	"pagetitle": {
+		"message": "タイトル"
+	}
+}

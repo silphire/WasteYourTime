@@ -1,0 +1,13 @@
+{
+	"wyt": {
+		"message": "Waste Your Time", 
+		"description": "investigate which website wastes your expensive time", 
+		"author": "Yuki Mitsui <silphire@gmail.com>"
+	},
+	"rank": {
+		"message": "rank"
+	}, 
+	"pagetitle": {
+		"message": "title"
+	}
+}

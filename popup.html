@@ -8,6 +8,13 @@ var maxGraphWidth = 320;
 var maxGraphHeight = 15;
 var fontSize = 12;
 
+function applyLocale() {
+	document.getElementById("head_rank").innerHTML = chrome.i18n.getMessage("rank");
+	document.getElementById("foot_rank").innerHTML = chrome.i18n.getMessage("rank");
+	document.getElementById("head_pagetitle").innerHTML = chrome.i18n.getMessage("pagetitle");
+	document.getElementById("foot_pagetitle").innerHTML = chrome.i18n.getMessage("pagetitle");
+}
+
 function timeElement(n, unit) {
 	if(n == 0)
 		return "";
@@ -29,6 +36,8 @@ function sec2date(sec) {
 }
 
 function createVisitedPageList() {
+	applyLocale();
+	
 	if(!('visitedDB' in localStorage))
 		return;
 	
@@ -92,14 +101,14 @@ body {
   </tbody>
   <thead>
     <tr>
-      <th>rank</th>
-      <th>title</th>
+      <th id="head_rank">rank</th>
+      <th id="head_pagetitle">title</th>
     </tr>
   </thead>
   <tfoot>
     <tr>
-      <th>rank</th>
-      <th>title</th>
+      <th id="foot_rank">rank</th>
+      <th id="foot_pagetitle">title</th>
     </tr>
   </tfoot>
 </table>

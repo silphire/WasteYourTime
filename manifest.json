@@ -1,7 +1,5 @@
 {
-	"name": "Waste Your Time", 
-	"description": "investigate which website wastes your expensive time", 
-	"author": "Yuki Mitsui <silphire@gmail.com>", 
+	"name": "__MSG_wyt__", 
 	"version": "0.1", 
 	"icons": {
 		"16": "icon.png", 
@@ -16,5 +14,6 @@
 		"default_icon": "icon.png", 
 		"default_title": "Waste Your Time", 
 		"popup": "popup.html"
-	}
+	},
+	"default_locale": "en"
 }
